@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import StarChart from '@/components/StarChart';
 import AstrologyOptions from '@/components/AstrologyOptions';
 import ZodiacInfo from '@/components/ZodiacInfo';
+import LocationSelector from '@/components/LocationSelector';
 import NumerologyInfo from '@/components/NumerologyInfo';
 import NavBar from '@/components/NavBar';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -66,11 +67,11 @@ const Index = () => {
           </div>
           <h1 className="text-4xl md:text-5xl font-serif mb-4">
             <span className="bg-gradient-to-r from-star-bright via-celestial-blue to-celestial-purple bg-clip-text text-transparent">
-              Celestial Skyview
+              FOGAMA
             </span>
           </h1>
           <p className="max-w-lg text-muted-foreground">
-            Explore the night sky, track celestial movements, and discover how the stars influence your life's journey.
+            Discover the mysteries of astrology and numerology. Explore celestial movements, unlock your personal numbers, and understand how the stars and numbers influence your life's journey.
           </p>
         </div>
 
@@ -81,6 +82,7 @@ const Index = () => {
           {/* Left sidebar for non-mobile */}
           {!isMobile && (
             <div className="col-span-1 space-y-6">
+              <LocationSelector />
               <AstrologyOptions />
               <div className="flex justify-center gap-4 mb-4">
                 <Button 
@@ -137,6 +139,7 @@ const Index = () => {
             {/* Mobile info section */}
             {isMobile && (
               <div className="space-y-6">
+                <LocationSelector />
                 <div className="flex justify-center gap-4 mb-4">
                   <Button 
                     variant="outline" 

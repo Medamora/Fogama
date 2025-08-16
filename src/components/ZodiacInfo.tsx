@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { zodiacSigns } from '@/lib/celestialData';
 import { cn } from '@/lib/utils';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface ZodiacInfoProps {
   className?: string;
@@ -89,8 +90,10 @@ const ZodiacInfo = ({ className, initialSign }: ZodiacInfoProps) => {
           </div>
           
           <div className="mb-4">
-            <div className="text-muted-foreground text-sm mb-1">Description:</div>
-            <p className="text-sm leading-relaxed">{signData.description}</p>
+            <div className="text-muted-foreground text-sm mb-2">Detailed Description:</div>
+            <ScrollArea className="h-32 w-full">
+              <p className="text-sm leading-relaxed pr-4">{signData.description}</p>
+            </ScrollArea>
           </div>
           
           <div>

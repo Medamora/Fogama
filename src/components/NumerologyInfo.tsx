@@ -4,7 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { calculateLifePathNumber, calculateDestinyNumber, calculatePersonalityNumber } from '@/lib/numerologyUtils';
+import { calculateLifePathNumber, calculateDestinyNumber, calculatePersonalityNumber, getNumerologyMeaning } from '@/lib/numerologyUtils';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
 
 interface NumerologyInfoProps {
   className?: string;
@@ -67,33 +69,58 @@ const NumerologyInfo = ({ className }: NumerologyInfoProps) => {
       </div>
       
       {(results.lifePathNumber || results.destinyNumber || results.personalityNumber) && (
-        <div className="mt-6 pt-4 border-t border-constellation/30 space-y-3">
-          {results.lifePathNumber && (
-            <div>
-              <h4 className="text-sm font-semibold">Life Path Number: {results.lifePathNumber}</h4>
-              <p className="text-xs text-muted-foreground">
-                Your life's purpose and the path you'll take to fulfill that purpose.
-              </p>
+        <div className="mt-6 pt-4 border-t border-constellation/30">
+          <ScrollArea className="h-80 w-full">
+            <div className="space-y-6 pr-4">
+              {results.lifePathNumber && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-lg font-semibold text-star-bright">Life Path Number</h4>
+                    <span className="text-2xl font-bold text-celestial-blue">{results.lifePathNumber}</span>
+                  </div>
+                  <div className="bg-night-light/30 rounded-lg p-4 border border-constellation/20">
+                    <p className="text-sm leading-relaxed text-foreground">
+                      {getNumerologyMeaning(results.lifePathNumber)}
+                    </p>
+                  </div>
+                </div>
+              )}
+              
+              {results.destinyNumber && (
+                <>
+                  <Separator className="bg-constellation/30" />
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-lg font-semibold text-star-bright">Destiny Number</h4>
+                      <span className="text-2xl font-bold text-celestial-purple">{results.destinyNumber}</span>
+                    </div>
+                    <div className="bg-night-light/30 rounded-lg p-4 border border-constellation/20">
+                      <p className="text-sm leading-relaxed text-foreground">
+                        {getNumerologyMeaning(results.destinyNumber)}
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
+              
+              {results.personalityNumber && (
+                <>
+                  <Separator className="bg-constellation/30" />
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-lg font-semibold text-star-bright">Personality Number</h4>
+                      <span className="text-2xl font-bold text-celestial-pink">{results.personalityNumber}</span>
+                    </div>
+                    <div className="bg-night-light/30 rounded-lg p-4 border border-constellation/20">
+                      <p className="text-sm leading-relaxed text-foreground">
+                        {getNumerologyMeaning(results.personalityNumber)}
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-          )}
-          
-          {results.destinyNumber && (
-            <div>
-              <h4 className="text-sm font-semibold">Destiny Number: {results.destinyNumber}</h4>
-              <p className="text-xs text-muted-foreground">
-                Your goals and the direction your life is meant to take.
-              </p>
-            </div>
-          )}
-          
-          {results.personalityNumber && (
-            <div>
-              <h4 className="text-sm font-semibold">Personality Number: {results.personalityNumber}</h4>
-              <p className="text-xs text-muted-foreground">
-                How others perceive you and the impression you give.
-              </p>
-            </div>
-          )}
+          </ScrollArea>
         </div>
       )}
     </div>
