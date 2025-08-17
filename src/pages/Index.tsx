@@ -5,8 +5,9 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import StarChart from '@/components/StarChart';
 import AstrologyOptions from '@/components/AstrologyOptions';
 import ZodiacInfo from '@/components/ZodiacInfo';
-import LocationSelector from '@/components/LocationSelector';
+import BirthDetailsSelector from '@/components/BirthDetailsSelector';
 import NumerologyInfo from '@/components/NumerologyInfo';
+import PlanetaryMovements from '@/components/PlanetaryMovements';
 import NavBar from '@/components/NavBar';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -82,7 +83,7 @@ const Index = () => {
           {/* Left sidebar for non-mobile */}
           {!isMobile && (
             <div className="col-span-1 space-y-6">
-              <LocationSelector />
+              <BirthDetailsSelector />
               <AstrologyOptions />
               <div className="flex justify-center gap-4 mb-4">
                 <Button 
@@ -135,11 +136,14 @@ const Index = () => {
                 </div>
               </div>
             </div>
+
+            {/* Planetary Movements under chart */}
+            <PlanetaryMovements />
             
             {/* Mobile info section */}
             {isMobile && (
               <div className="space-y-6">
-                <LocationSelector />
+                <BirthDetailsSelector />
                 <div className="flex justify-center gap-4 mb-4">
                   <Button 
                     variant="outline" 
