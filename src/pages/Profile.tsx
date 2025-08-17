@@ -11,6 +11,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { getChineseZodiac, getZodiacSign } from '@/lib/astrologyUtils';
 import { planets, houses, generateHoroscope } from '@/lib/celestialData';
+import BirthChartForm, { BirthChartData } from '@/components/BirthChartForm';
+import BirthChartVisualization from '@/components/BirthChartVisualization';
 
 const Profile = () => {
   const [birthYear, setBirthYear] = useState<number>(2000);
@@ -18,6 +20,7 @@ const Profile = () => {
   const [birthDay, setBirthDay] = useState<number>(1);
   const [birthTime, setBirthTime] = useState<string>("12:00");
   const [birthPlace, setBirthPlace] = useState<string>("");
+  const [chartData, setChartData] = useState<BirthChartData | null>(null);
   const isMobile = useIsMobile();
   
   const chineseZodiac = getChineseZodiac(birthYear);
@@ -239,70 +242,70 @@ const Profile = () => {
                   <CardDescription>Your complete astrological birth chart</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                     <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="birthTime">Birth Time (24h)</Label>
-                        <Input 
-                          id="birthTime" 
-                          type="time" 
-                          value={birthTime} 
-                          onChange={(e) => setBirthTime(e.target.value)}
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="birthPlace">Birth Place</Label>
-                        <Input 
-                          id="birthPlace" 
-                          type="text" 
-                          placeholder="City, Country" 
-                          value={birthPlace} 
-                          onChange={(e) => setBirthPlace(e.target.value)}
-                        />
-                      </div>
-                      
-                      <Button className="w-full mt-2">Generate Chart</Button>
+                      <BirthChartForm 
+                        onGenerateChart={(data) => setChartData(data)}
+                      />
                     </div>
                     
-                    <div className="aspect-square bg-black/20 rounded-lg flex items-center justify-center border border-white/10">
-                      <div className="text-center">
-                        <div className="text-5xl mb-2">⚝</div>
-                        <p className="text-muted-foreground">
-                          Enter your complete birth details to view your chart
-                        </p>
-                      </div>
+                    <div className="aspect-square">
+                      <BirthChartVisualization 
+                        birthData={chartData} 
+                        className="h-full"
+                      />
                     </div>
                   </div>
                   
-                  <div className="grid gap-6 md:grid-cols-2">
-                    <div>
-                      <h3 className="text-lg font-medium mb-4">Planetary Positions</h3>
-                      <div className="space-y-2">
-                        {planets.slice(0, 6).map((planet) => (
-                          <div key={planet.id} className="flex items-center p-2 glass-card rounded-lg">
-                            <div className="text-2xl mr-3">{planet.symbol}</div>
-                            <div>
-                              <div className="font-medium">{planet.name}</div>
-                              <div className="text-xs text-muted-foreground">{planet.description}</div>
+                  {chartData && (
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <div>
+                        <h3 className="text-lg font-medium mb-4">Planetary Positions</h3>
+                        <div className="space-y-2">
+                          {planets.map((planet) => (
+                            <div key={planet.id} className="flex items-center p-3 glass-card rounded-lg">
+                              <div className="text-2xl mr-3">{planet.symbol}</div>
+                              <div className="flex-1">
+                                <div className="font-medium">{planet.name}</div>
+                                <div className="text-xs text-muted-foreground mb-1">{planet.description}</div>
+                                <div className="text-xs text-constellation">
+                                  {/* Simulated position - in real app this would be calculated */}
+                                  {Math.floor(Math.random() * 30) + 1}° {['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo'][Math.floor(Math.random() * 6)]}
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-medium mb-4">Astrological Houses</h3>
+                        <div className="space-y-2">
+                          {houses.map((house) => (
+                            <div key={house.id} className="p-3 glass-card rounded-lg">
+                              <div className="font-medium">{house.name} ({house.alias})</div>
+                              <div className="text-xs text-muted-foreground mb-1">{house.description}</div>
+                              <div className="text-xs text-constellation">
+                                {/* Simulated cusp sign */}
+                                Cusp: {['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio'][Math.floor(Math.random() * 8)]}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                    
-                    <div>
-                      <h3 className="text-lg font-medium mb-4">Houses</h3>
-                      <div className="space-y-2">
-                        {houses.slice(0, 6).map((house) => (
-                          <div key={house.id} className="p-2 glass-card rounded-lg">
-                            <div className="font-medium">{house.name} ({house.alias})</div>
-                            <div className="text-xs text-muted-foreground">{house.description}</div>
-                          </div>
-                        ))}
-                      </div>
+                  )}
+                  
+                  {chartData && (
+                    <div className="mt-6 p-4 glass-card rounded-lg">
+                      <h3 className="text-lg font-medium mb-3">Chart Interpretation</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        Your birth chart reveals the exact positions of all celestial bodies at the moment of your birth in {chartData.city}, {chartData.country} on {chartData.day}/{chartData.month}/{chartData.year} at {chartData.hour}:{chartData.minute}. 
+                        This cosmic snapshot provides profound insights into your personality, relationships, career potential, and life path. The planets represent different aspects of your psyche, while the houses show the areas of life where their energies manifest. 
+                        The aspects (angular relationships between planets) reveal how these energies interact, creating the unique tapestry of your cosmic blueprint.
+                      </p>
                     </div>
-                  </div>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>
