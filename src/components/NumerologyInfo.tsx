@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { calculateLifePathNumber, calculateDestinyNumber, calculatePersonalityNumber, getNumerologyMeaning } from '@/lib/numerologyUtils';
+import { calculateNumerologyProfile, getNumerologyMeaning } from '@/lib/enhancedNumerology';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 
@@ -22,15 +22,13 @@ const NumerologyInfo = ({ className }: NumerologyInfoProps) => {
   }>({});
 
   const handleCalculate = () => {
-    if (birthdate) {
-      const lifePathNumber = calculateLifePathNumber(birthdate);
-      setResults(prev => ({ ...prev, lifePathNumber }));
-    }
-    
-    if (name) {
-      const destinyNumber = calculateDestinyNumber(name);
-      const personalityNumber = calculatePersonalityNumber(name);
-      setResults(prev => ({ ...prev, destinyNumber, personalityNumber }));
+    if (name && birthdate) {
+      const profile = calculateNumerologyProfile(name, new Date(birthdate));
+      setResults({
+        lifePathNumber: profile.lifePathNumber,
+        destinyNumber: profile.destinyNumber,
+        personalityNumber: profile.personalityNumber
+      });
     }
   };
 

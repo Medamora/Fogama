@@ -1,10 +1,10 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { RefreshCw, Calendar } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { generateHoroscope } from '@/lib/celestialData';
+import { getHoroscope } from '@/lib/horoscopeAPI';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 interface HoroscopeCardProps {
@@ -17,15 +17,26 @@ interface HoroscopeCardProps {
 
 const HoroscopeCard = ({ sign, name, symbol, color, className }: HoroscopeCardProps) => {
   const [horoscopes, setHoroscopes] = useState({
-    daily: generateHoroscope(sign, 'daily'),
-    monthly: generateHoroscope(sign, 'monthly'),
-    yearly: generateHoroscope(sign, 'yearly'),
+    daily: '',
+    monthly: '',
+    yearly: '',
   });
 
-  const refreshHoroscope = (tab: 'daily' | 'monthly' | 'yearly') => {
+  useEffect(() => {
+    const loadHoroscopes = async () => {
+      const daily = await getHoroscope(sign, 'daily');
+      const monthly = await getHoroscope(sign, 'monthly');
+      const yearly = await getHoroscope(sign, 'yearly');
+      setHoroscopes({ daily, monthly, yearly });
+    };
+    loadHoroscopes();
+  }, [sign]);
+
+  const refreshHoroscope = async (tab: 'daily' | 'monthly' | 'yearly') => {
+    const newHoroscope = await getHoroscope(sign, tab);
     setHoroscopes(prev => ({
       ...prev,
-      [tab]: generateHoroscope(sign, tab)
+      [tab]: newHoroscope
     }));
   };
 
