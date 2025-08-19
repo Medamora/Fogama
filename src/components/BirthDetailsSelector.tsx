@@ -36,31 +36,7 @@ const months = [
   { value: '12', name: 'December' },
 ];
 
-const countries = [
-  { code: 'US', name: 'United States', timezone: 'America/New_York' },
-  { code: 'UK', name: 'United Kingdom', timezone: 'Europe/London' },
-  { code: 'CA', name: 'Canada', timezone: 'America/Toronto' },
-  { code: 'AU', name: 'Australia', timezone: 'Australia/Sydney' },
-  { code: 'DE', name: 'Germany', timezone: 'Europe/Berlin' },
-  { code: 'FR', name: 'France', timezone: 'Europe/Paris' },
-  { code: 'JP', name: 'Japan', timezone: 'Asia/Tokyo' },
-  { code: 'IN', name: 'India', timezone: 'Asia/Kolkata' },
-  { code: 'BR', name: 'Brazil', timezone: 'America/Sao_Paulo' },
-  { code: 'MX', name: 'Mexico', timezone: 'America/Mexico_City' },
-];
-
-const cities = {
-  US: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'],
-  UK: ['London', 'Birmingham', 'Manchester', 'Glasgow', 'Liverpool', 'Bristol', 'Sheffield', 'Leeds', 'Edinburgh', 'Cardiff'],
-  CA: ['Toronto', 'Montreal', 'Vancouver', 'Calgary', 'Edmonton', 'Ottawa', 'Winnipeg', 'Quebec City', 'Hamilton', 'Kitchener'],
-  AU: ['Sydney', 'Melbourne', 'Brisbane', 'Perth', 'Adelaide', 'Gold Coast', 'Newcastle', 'Canberra', 'Sunshine Coast', 'Wollongong'],
-  DE: ['Berlin', 'Hamburg', 'Munich', 'Cologne', 'Frankfurt', 'Stuttgart', 'Düsseldorf', 'Dortmund', 'Essen', 'Leipzig'],
-  FR: ['Paris', 'Marseille', 'Lyon', 'Toulouse', 'Nice', 'Nantes', 'Strasbourg', 'Montpellier', 'Bordeaux', 'Lille'],
-  JP: ['Tokyo', 'Yokohama', 'Osaka', 'Nagoya', 'Sapporo', 'Fukuoka', 'Kobe', 'Kawasaki', 'Kyoto', 'Saitama'],
-  IN: ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Surat'],
-  BR: ['São Paulo', 'Rio de Janeiro', 'Brasília', 'Salvador', 'Fortaleza', 'Belo Horizonte', 'Manaus', 'Curitiba', 'Recife', 'Goiânia'],
-  MX: ['Mexico City', 'Guadalajara', 'Monterrey', 'Puebla', 'Tijuana', 'León', 'Juárez', 'Torreón', 'Querétaro', 'San Luis Potosí'],
-} as const;
+import { countries, cities, getCitiesByCountryCode } from '@/lib/locationData';
 
 // Generate days 1-31
 const days = Array.from({ length: 31 }, (_, i) => ({ 
@@ -117,7 +93,7 @@ const BirthDetailsSelector = ({ className, onBirthDetailsChange }: BirthDetailsS
   };
 
   const selectedCountryCode = countries.find(c => c.name === birthDetails.country)?.code;
-  const availableCities = selectedCountryCode ? cities[selectedCountryCode as keyof typeof cities] || [] : [];
+  const availableCities = selectedCountryCode ? getCitiesByCountryCode(selectedCountryCode) : [];
 
   return (
     <div className={cn("glass-card rounded-xl p-4 space-y-4", className)}>
@@ -137,7 +113,7 @@ const BirthDetailsSelector = ({ className, onBirthDetailsChange }: BirthDetailsS
             <SelectTrigger>
               <SelectValue placeholder="Day" />
             </SelectTrigger>
-            <SelectContent className="bg-night-light/90 backdrop-blur-sm border-constellation/30 max-h-40">
+            <SelectContent className="bg-card/95 backdrop-blur-lg border-border/50 max-h-40 z-50">
               {days.map((day) => (
                 <SelectItem key={day.value} value={day.value}>
                   {day.name}
@@ -150,7 +126,7 @@ const BirthDetailsSelector = ({ className, onBirthDetailsChange }: BirthDetailsS
             <SelectTrigger>
               <SelectValue placeholder="Month" />
             </SelectTrigger>
-            <SelectContent className="bg-night-light/90 backdrop-blur-sm border-constellation/30">
+            <SelectContent className="bg-card/95 backdrop-blur-lg border-border/50 z-50">
               {months.map((month) => (
                 <SelectItem key={month.value} value={month.value}>
                   {month.name}
@@ -163,7 +139,7 @@ const BirthDetailsSelector = ({ className, onBirthDetailsChange }: BirthDetailsS
             <SelectTrigger>
               <SelectValue placeholder="Year" />
             </SelectTrigger>
-            <SelectContent className="bg-night-light/90 backdrop-blur-sm border-constellation/30 max-h-40">
+            <SelectContent className="bg-card/95 backdrop-blur-lg border-border/50 max-h-40 z-50">
               {years.map((year) => (
                 <SelectItem key={year.value} value={year.value}>
                   {year.name}
@@ -185,7 +161,7 @@ const BirthDetailsSelector = ({ className, onBirthDetailsChange }: BirthDetailsS
             <SelectTrigger>
               <SelectValue placeholder="Hour" />
             </SelectTrigger>
-            <SelectContent className="bg-night-light/90 backdrop-blur-sm border-constellation/30 max-h-40">
+            <SelectContent className="bg-card/95 backdrop-blur-lg border-border/50 max-h-40 z-50">
               {hours.map((hour) => (
                 <SelectItem key={hour.value} value={hour.value}>
                   {hour.name}
@@ -198,7 +174,7 @@ const BirthDetailsSelector = ({ className, onBirthDetailsChange }: BirthDetailsS
             <SelectTrigger>
               <SelectValue placeholder="Min" />
             </SelectTrigger>
-            <SelectContent className="bg-night-light/90 backdrop-blur-sm border-constellation/30">
+            <SelectContent className="bg-card/95 backdrop-blur-lg border-border/50 z-50">
               {minutes.map((minute) => (
                 <SelectItem key={minute.value} value={minute.value}>
                   {minute.name}
@@ -216,7 +192,7 @@ const BirthDetailsSelector = ({ className, onBirthDetailsChange }: BirthDetailsS
           <SelectTrigger>
             <SelectValue placeholder="Select your birth country" />
           </SelectTrigger>
-          <SelectContent className="bg-night-light/90 backdrop-blur-sm border-constellation/30">
+          <SelectContent className="bg-card/95 backdrop-blur-lg border-border/50 z-50">
             {countries.map((country) => (
               <SelectItem key={country.code} value={country.name}>
                 {country.name}
@@ -237,7 +213,7 @@ const BirthDetailsSelector = ({ className, onBirthDetailsChange }: BirthDetailsS
           <SelectTrigger>
             <SelectValue placeholder={selectedCountryCode ? "Select your birth city" : "Select country first"} />
           </SelectTrigger>
-          <SelectContent className="bg-night-light/90 backdrop-blur-sm border-constellation/30">
+          <SelectContent className="bg-card/95 backdrop-blur-lg border-border/50 z-50">
             {availableCities.map((city) => (
               <SelectItem key={city} value={city}>
                 {city}

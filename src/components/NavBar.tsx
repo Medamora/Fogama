@@ -48,7 +48,7 @@ const NavBar = () => {
           <Link to="/" className="text-xl font-serif tracking-wider flex items-center gap-2">
             <span className="text-2xl">{moonPhase.icon}</span>
             <span className="font-medium bg-gradient-to-r from-star-bright to-celestial-blue bg-clip-text text-transparent">
-              Celestial Skyview
+              FOGAMA
             </span>
           </Link>
         </div>
