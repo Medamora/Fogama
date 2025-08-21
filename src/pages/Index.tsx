@@ -5,9 +5,10 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import StarChart from '@/components/StarChart';
 import AstrologyOptions from '@/components/AstrologyOptions';
 import ZodiacInfo from '@/components/ZodiacInfo';
-import BirthDetailsSelector from '@/components/BirthDetailsSelector';
+import BirthDetailsSelector, { BirthDetails } from '@/components/BirthDetailsSelector';
 import NumerologyInfo from '@/components/NumerologyInfo';
 import PlanetaryMovements from '@/components/PlanetaryMovements';
+import DetailedResults from '@/components/DetailedResults';
 import NavBar from '@/components/NavBar';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -16,6 +17,29 @@ import { getAstrologicalDate } from '@/lib/astrologyUtils';
 const Index = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [showNumerology, setShowNumerology] = useState(false);
+  const [birthDetails, setBirthDetails] = useState<BirthDetails>({
+    day: '',
+    month: '',
+    year: '',
+    hour: '',
+    minute: '',
+    city: '',
+    country: '',
+    timezone: ''
+  });
+  const [astrologyOptions, setAstrologyOptions] = useState({
+    displayAspects: true,
+    displayMinorAspects: false,
+    displayLilithAspects: false,
+    displayAsteroidAspects: false,
+    showNumerology: false,
+    showSunSign: true,
+    showMoonSign: true,
+    showChineseZodiac: false,
+    showDailyHoroscope: true,
+    showMonthlyHoroscope: false,
+    showYearlyHoroscope: false
+  });
   const isMobile = useIsMobile();
   const [backgroundStars, setBackgroundStars] = useState<JSX.Element[]>([]);
   const today = getAstrologicalDate();
@@ -83,8 +107,8 @@ const Index = () => {
           {/* Left sidebar for non-mobile */}
           {!isMobile && (
             <div className="col-span-1 space-y-6">
-              <BirthDetailsSelector />
-              <AstrologyOptions />
+            <BirthDetailsSelector onBirthDetailsChange={setBirthDetails} />
+            <AstrologyOptions onOptionsChange={setAstrologyOptions} />
               <div className="flex justify-center gap-4 mb-4">
                 <Button 
                   variant="outline" 
@@ -112,7 +136,11 @@ const Index = () => {
               {showNumerology ? (
                 <NumerologyInfo className="animate-fade-in" />
               ) : (
-                <ZodiacInfo className="animate-fade-in" />
+                <DetailedResults 
+                  birthDetails={birthDetails}
+                  options={astrologyOptions}
+                  className="animate-fade-in"
+                />
               )}
             </div>
           )}
@@ -143,7 +171,7 @@ const Index = () => {
             {/* Mobile info section */}
             {isMobile && (
               <div className="space-y-6">
-                <BirthDetailsSelector />
+                <BirthDetailsSelector onBirthDetailsChange={setBirthDetails} />
                 <div className="flex justify-center gap-4 mb-4">
                   <Button 
                     variant="outline" 
@@ -154,7 +182,7 @@ const Index = () => {
                     )}
                     onClick={() => setShowNumerology(false)}
                   >
-                    Zodiac
+                    Chart
                   </Button>
                   <Button 
                     variant="outline" 
@@ -172,7 +200,11 @@ const Index = () => {
                 {showNumerology ? (
                   <NumerologyInfo className="animate-fade-in" />
                 ) : (
-                  <ZodiacInfo className="animate-fade-in" />
+                  <DetailedResults 
+                    birthDetails={birthDetails}
+                    options={astrologyOptions}
+                    className="animate-fade-in"
+                  />
                 )}
               </div>
             )}
@@ -196,7 +228,10 @@ const Index = () => {
                   "transform transition-transform duration-300 ease-in-out",
                   showOptions ? "translate-y-0" : "translate-y-full"
                 )}>
-                  <AstrologyOptions className="rounded-b-none rounded-t-xl" />
+                  <AstrologyOptions 
+                    className="rounded-b-none rounded-t-xl" 
+                    onOptionsChange={setAstrologyOptions}
+                  />
                 </div>
               </div>
             </div>

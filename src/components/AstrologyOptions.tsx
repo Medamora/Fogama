@@ -9,9 +9,10 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 interface AstrologyOptionProps {
   className?: string;
+  onOptionsChange?: (options: any) => void;
 }
 
-const AstrologyOptions = ({ className }: AstrologyOptionProps) => {
+const AstrologyOptions = ({ className, onOptionsChange }: AstrologyOptionProps) => {
   const isMobile = useIsMobile();
   const [options, setOptions] = useState({
     // Aspects
@@ -43,7 +44,9 @@ const AstrologyOptions = ({ className }: AstrologyOptionProps) => {
   });
 
   const handleToggle = (option: keyof typeof options) => {
-    setOptions(prev => ({ ...prev, [option]: !prev[option] }));
+    const newOptions = { ...options, [option]: !options[option] };
+    setOptions(newOptions);
+    onOptionsChange?.(newOptions);
   };
 
   return (
@@ -157,11 +160,15 @@ const AstrologyOptions = ({ className }: AstrologyOptionProps) => {
               <div>
                 <Label htmlFor="true-lilith" className="text-xs block mb-2">Lilith Type</Label>
                 <div className="flex space-x-2">
-                  <Button
+                  <Button 
                     size="sm" 
                     variant={options.useTrueLilith ? "default" : "outline"} 
                     className="text-xs py-1 h-auto"
-                    onClick={() => setOptions(prev => ({ ...prev, useTrueLilith: true }))}
+                    onClick={() => {
+                      const newOptions = { ...options, useTrueLilith: true };
+                      setOptions(newOptions);
+                      onOptionsChange?.(newOptions);
+                    }}
                   >
                     True
                   </Button>
@@ -169,7 +176,11 @@ const AstrologyOptions = ({ className }: AstrologyOptionProps) => {
                     size="sm" 
                     variant={!options.useTrueLilith ? "default" : "outline"} 
                     className="text-xs py-1 h-auto"
-                    onClick={() => setOptions(prev => ({ ...prev, useTrueLilith: false }))}
+                    onClick={() => {
+                      const newOptions = { ...options, useTrueLilith: false };
+                      setOptions(newOptions);
+                      onOptionsChange?.(newOptions);
+                    }}
                   >
                     Mean
                   </Button>
@@ -183,7 +194,11 @@ const AstrologyOptions = ({ className }: AstrologyOptionProps) => {
                     size="sm" 
                     variant={options.useTrueNorthNode ? "default" : "outline"} 
                     className="text-xs py-1 h-auto"
-                    onClick={() => setOptions(prev => ({ ...prev, useTrueNorthNode: true }))}
+                    onClick={() => {
+                      const newOptions = { ...options, useTrueNorthNode: true };
+                      setOptions(newOptions);
+                      onOptionsChange?.(newOptions);
+                    }}
                   >
                     True
                   </Button>
@@ -191,7 +206,11 @@ const AstrologyOptions = ({ className }: AstrologyOptionProps) => {
                     size="sm" 
                     variant={!options.useTrueNorthNode ? "default" : "outline"} 
                     className="text-xs py-1 h-auto"
-                    onClick={() => setOptions(prev => ({ ...prev, useTrueNorthNode: false }))}
+                    onClick={() => {
+                      const newOptions = { ...options, useTrueNorthNode: false };
+                      setOptions(newOptions);
+                      onOptionsChange?.(newOptions);
+                    }}
                   >
                     Mean
                   </Button>
