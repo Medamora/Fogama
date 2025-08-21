@@ -78,7 +78,7 @@ const Profile = () => {
       const sunSign = getZodiacSign(parseInt(data.month), parseInt(data.day));
       if (sunSign) {
         try {
-          const horoscopeData = await getHoroscope(sunSign.id.toLowerCase(), 'today');
+          const horoscopeData = await getHoroscope(sunSign.id.toLowerCase(), 'daily');
           setHoroscope(horoscopeData);
         } catch (error) {
           console.error('Failed to fetch horoscope:', error);
