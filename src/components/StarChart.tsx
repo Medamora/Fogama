@@ -7,9 +7,32 @@ import { cn } from '@/lib/utils';
 interface StarChartProps {
   interactive?: boolean;
   className?: string;
+  birthDetails?: {
+    day: string;
+    month: string;
+    year: string;
+    hour: string;
+    minute: string;
+    city: string;
+    country: string;
+    timezone: string;
+  };
+  astrologyOptions?: {
+    displayAspects: boolean;
+    displayMinorAspects: boolean;
+    displayLilithAspects: boolean;
+    displayAsteroidAspects: boolean;
+    showNumerology: boolean;
+    showSunSign: boolean;
+    showMoonSign: boolean;
+    showChineseZodiac: boolean;
+    showDailyHoroscope: boolean;
+    showMonthlyHoroscope: boolean;
+    showYearlyHoroscope: boolean;
+  };
 }
 
-const StarChart = ({ interactive = true, className }: StarChartProps) => {
+const StarChart = ({ interactive = true, className, birthDetails, astrologyOptions }: StarChartProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [stars, setStars] = useState<any[]>([]);
   const [dimensions, setDimensions] = useState({ width: 800, height: 800 });
@@ -203,6 +226,41 @@ const StarChart = ({ interactive = true, className }: StarChartProps) => {
           </div>
         );
       })}
+
+      {/* Birth details overlay */}
+      {birthDetails && (birthDetails.day || birthDetails.month || birthDetails.year) && (
+        <div className="absolute top-4 left-4 bg-night-deep/80 backdrop-blur-sm rounded-lg p-3 border border-constellation/30">
+          <div className="text-sm font-serif text-celestial-blue mb-2">Personal Sky Chart</div>
+          <div className="text-xs text-constellation/80 space-y-1">
+            {birthDetails.day && birthDetails.month && birthDetails.year && (
+              <div>Birth: {birthDetails.day}/{birthDetails.month}/{birthDetails.year}</div>
+            )}
+            {birthDetails.hour && birthDetails.minute && (
+              <div>Time: {birthDetails.hour}:{birthDetails.minute}</div>
+            )}
+            {birthDetails.city && (
+              <div>Location: {birthDetails.city}</div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Astrology options overlay */}
+      {astrologyOptions && Object.values(astrologyOptions).some(option => option) && (
+        <div className="absolute top-4 right-4 bg-night-deep/80 backdrop-blur-sm rounded-lg p-3 border border-constellation/30">
+          <div className="text-sm font-serif text-celestial-purple mb-2">Active Readings</div>
+          <div className="text-xs text-constellation/80 space-y-1">
+            {astrologyOptions.displayAspects && <div>• Major Aspects</div>}
+            {astrologyOptions.displayMinorAspects && <div>• Minor Aspects</div>}
+            {astrologyOptions.displayLilithAspects && <div>• Lilith/North Node</div>}
+            {astrologyOptions.displayAsteroidAspects && <div>• Asteroids</div>}
+            {astrologyOptions.showSunSign && <div>• Sun Sign</div>}
+            {astrologyOptions.showMoonSign && <div>• Moon Sign</div>}
+            {astrologyOptions.showChineseZodiac && <div>• Chinese Zodiac</div>}
+            {astrologyOptions.showNumerology && <div>• Numerology</div>}
+          </div>
+        </div>
+      )}
 
       {/* Interactive controls help text */}
       {interactive && (

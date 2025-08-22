@@ -157,7 +157,11 @@ const Index = () => {
               </div>
               
               <div className="relative w-full aspect-square overflow-hidden">
-                <StarChart className="w-full h-full animate-fade-in" />
+                <StarChart 
+                  className="w-full h-full animate-fade-in" 
+                  birthDetails={birthDetails}
+                  astrologyOptions={astrologyOptions}
+                />
                 
                 <div className="absolute bottom-4 left-4 text-xs rounded-full bg-night-deep/80 px-3 py-1 backdrop-blur-sm">
                   Northern Hemisphere View
