@@ -112,6 +112,7 @@ const Horoscope = () => {
               <div className="flex gap-2 min-w-max">
                 {signs.map((sign) => (
                   <button
+                    type="button"
                     key={sign.id}
                     onClick={() => setSelectedSign(sign.id === selectedSign ? null : sign.id)}
                     className={cn(

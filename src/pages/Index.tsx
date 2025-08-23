@@ -111,10 +111,11 @@ const Index = () => {
             <AstrologyOptions onOptionsChange={setAstrologyOptions} />
               <div className="flex justify-center gap-4 mb-4">
                 <Button 
+                  type="button"
                   variant="outline" 
                   size="sm"
                   className={cn(
-                    "rounded-full px-4",
+                    "rounded-full px-4 pointer-events-auto",
                     !showNumerology && "bg-accent text-accent-foreground"
                   )}
                   onClick={() => setShowNumerology(false)}
@@ -122,10 +123,11 @@ const Index = () => {
                   Zodiac
                 </Button>
                 <Button 
+                  type="button"
                   variant="outline" 
                   size="sm"
                   className={cn(
-                    "rounded-full px-4",
+                    "rounded-full px-4 pointer-events-auto",
                     showNumerology && "bg-accent text-accent-foreground"
                   )}
                   onClick={() => setShowNumerology(true)}
@@ -178,10 +180,11 @@ const Index = () => {
                 <BirthDetailsSelector onBirthDetailsChange={setBirthDetails} />
                 <div className="flex justify-center gap-4 mb-4">
                   <Button 
+                    type="button"
                     variant="outline" 
                     size="sm"
                     className={cn(
-                      "rounded-full px-4",
+                      "rounded-full px-4 pointer-events-auto",
                       !showNumerology && "bg-accent text-accent-foreground"
                     )}
                     onClick={() => setShowNumerology(false)}
@@ -189,10 +192,11 @@ const Index = () => {
                     Chart
                   </Button>
                   <Button 
+                    type="button"
                     variant="outline" 
                     size="sm"
                     className={cn(
-                      "rounded-full px-4",
+                      "rounded-full px-4 pointer-events-auto",
                       showNumerology && "bg-accent text-accent-foreground"
                     )}
                     onClick={() => setShowNumerology(true)}
@@ -217,10 +221,11 @@ const Index = () => {
         
         {/* Mobile options toggle */}
         {isMobile && (
-          <div className="fixed bottom-0 left-0 right-0 z-10">
+          <div className="fixed bottom-0 left-0 right-0 z-20">
             <div className="container mx-auto px-4">
               <div className="relative">
                 <Button
+                  type="button"
                   variant="outline"
                   className="absolute left-1/2 -translate-x-1/2 -top-10 rounded-t-xl rounded-b-none border-b-0 bg-night-light/90 backdrop-blur-sm flex items-center gap-2 px-6"
                   onClick={() => setShowOptions(!showOptions)}

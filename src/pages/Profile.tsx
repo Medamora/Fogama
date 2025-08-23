@@ -175,7 +175,7 @@ const Profile = () => {
                       </div>
                     </CardContent>
                     <CardFooter>
-                      <Button onClick={handleProfileSave} className="ml-auto">
+                      <Button type="button" onClick={handleProfileSave} className="ml-auto">
                         Save Profile
                       </Button>
                     </CardFooter>

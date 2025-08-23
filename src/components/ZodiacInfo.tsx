@@ -36,6 +36,7 @@ const ZodiacInfo = ({ className, initialSign }: ZodiacInfoProps) => {
       <div className="flex overflow-x-auto py-3 px-2 gap-1 border-b border-constellation/30 hide-scrollbar">
         {zodiacSigns.map((sign) => (
           <button
+            type="button"
             key={sign.id}
             onClick={() => setSelectedSign(sign.id)}
             className={cn(

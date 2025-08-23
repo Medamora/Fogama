@@ -161,6 +161,7 @@ const AstrologyOptions = ({ className, onOptionsChange }: AstrologyOptionProps) 
                 <Label htmlFor="true-lilith" className="text-xs block mb-2">Lilith Type</Label>
                 <div className="flex space-x-2">
                   <Button 
+                    type="button"
                     size="sm" 
                     variant={options.useTrueLilith ? "default" : "outline"} 
                     className="text-xs py-1 h-auto"
@@ -173,6 +174,7 @@ const AstrologyOptions = ({ className, onOptionsChange }: AstrologyOptionProps) 
                     True
                   </Button>
                   <Button 
+                    type="button"
                     size="sm" 
                     variant={!options.useTrueLilith ? "default" : "outline"} 
                     className="text-xs py-1 h-auto"
@@ -191,6 +193,7 @@ const AstrologyOptions = ({ className, onOptionsChange }: AstrologyOptionProps) 
                 <Label htmlFor="true-node" className="text-xs block mb-2">North Node Type</Label>
                 <div className="flex space-x-2">
                   <Button 
+                    type="button"
                     size="sm" 
                     variant={options.useTrueNorthNode ? "default" : "outline"} 
                     className="text-xs py-1 h-auto"
@@ -203,6 +206,7 @@ const AstrologyOptions = ({ className, onOptionsChange }: AstrologyOptionProps) 
                     True
                   </Button>
                   <Button 
+                    type="button"
                     size="sm" 
                     variant={!options.useTrueNorthNode ? "default" : "outline"} 
                     className="text-xs py-1 h-auto"
@@ -308,7 +312,7 @@ const AstrologyOptions = ({ className, onOptionsChange }: AstrologyOptionProps) 
       </Tabs>
       
       <div className="mt-6 pt-4 border-t border-constellation/30">
-        <Button className="w-full">
+        <Button type="button" className="w-full">
           Apply Settings
         </Button>
       </div>
